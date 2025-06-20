@@ -1,0 +1,1 @@
+Pozwoli to między innymi podpiąć się w wmiarę czysty sposób z zapisem wiadomości do bazy danych.
