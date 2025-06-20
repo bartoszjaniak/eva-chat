@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qtKF6IC9yvo=",
+  "success": true,
+  "projectFilePath": "/Users/bartoszjaniak/Programming/eva-chat/backend/BackendApi/BackendApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/bartoszjaniak/.nuget/packages/microsoft.aspnetcore.openapi/9.0.6/microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "/Users/bartoszjaniak/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
