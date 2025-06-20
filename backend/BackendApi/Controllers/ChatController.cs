@@ -1,21 +1,26 @@
-using System.Runtime.CompilerServices;
-using BackendApi.DTOs;
+using BackendApi.DTOs.Chat;
+using BackendApi.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
-[ApiController]
-[Route("api/chat")]
-public class ChatController : ControllerBase
+namespace BackendApi.Controllers
 {
-    private readonly IMediator _mediator;
+    [ApiController]
+    [Route("api/chat")]
+    public class ChatController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+        public ChatController(IMediator mediator) => _mediator = mediator;
 
-
-    [HttpGet("{sessionId}/stream")]
-    public async IAsyncEnumerable<string> Stream(Guid sessionId, [FromBody] SendMessageDto dto, [EnumeratorCancellation] CancellationToken ct) =>
-        _mediator.CreateStream(new SendMessageCommand(sessionId, dto.Content), ct);
-
-
-    [HttpGet("{sessionId}/history")]
-    public async Task<IActionResult> History(Guid sessionId, CancellationToken ct) =>
-        Ok(await _mediator.Send(new GetHistoryQuery(sessionId), ct));
+        /// <summary>
+        /// Wysyła wiadomość do chatbota i zwraca odpowiedź w formie streamu.
+        /// Jeśli SessionId jest null, tworzy nową sesję.
+        /// </summary>
+        [HttpPost("message")]
+        public IAsyncEnumerable<StreamMessageResultDto> SendMessage(
+            [FromBody] StreamMessageCommand cmd,
+            CancellationToken ct)
+        {
+            return _mediator.CreateStream(cmd, ct);
+        }
+    }
 }

@@ -1,3 +1,4 @@
+using BackendApi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContext : DbContext

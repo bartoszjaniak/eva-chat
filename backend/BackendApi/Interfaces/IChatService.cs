@@ -1,5 +1,9 @@
-public interface IChatService
+
+namespace BackendApi.Interfaces
 {
-    Task<string> GetResponseAsync(string input, CancellationToken ct = default);
-    IAsyncEnumerable<string> StreamResponseAsync(string input, CancellationToken ct = default);
+    public interface IChatService
+    {
+        IAsyncEnumerable<string> StreamResponseAsync(string input, CancellationToken ct = default);
+    }
+
 }

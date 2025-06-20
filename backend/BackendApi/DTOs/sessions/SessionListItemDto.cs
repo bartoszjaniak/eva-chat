@@ -12,6 +12,6 @@ namespace BackendApi.DTOs.sessions
         /// <summary>
         /// Data utworzenia sesji
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime StartedAt { get; set; }
     }
 }

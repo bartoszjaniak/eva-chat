@@ -1,4 +1,4 @@
-ChatbotApi/
+BackendApi/
 ├── Interfaces/
 │   └── IChatService.cs
 ├── Services/

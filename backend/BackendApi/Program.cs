@@ -1,3 +1,5 @@
+using BackendApi.Interfaces;
+using BackendApi.Services.Mocks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,14 +12,15 @@ builder.Services.AddOpenApi();
 // Register controllers
 builder.Services.AddControllers();
 
-// Register MediatR for CQRS
-// Rejestracja MediatR – skanuje assembly zawierające handlery
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+// Register MediatR
+builder.Services.AddMediatR(typeof(Program));
 
 // Register Entity Framework Core with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Services
+builder.Services.AddScoped<IChatService, FakeChatService>();
 
 var app = builder.Build();
 

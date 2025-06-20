@@ -1,16 +1,17 @@
 using System.Runtime.CompilerServices;
+using BackendApi.Interfaces;
 
-public class FakeChatService : IChatService
+namespace BackendApi.Services.Mocks
 {
-    public Task<string> GetResponseAsync(string input, CancellationToken ct = default) =>
-        Task.FromResult("Fejkowa odpowiedź");
-
-    public async IAsyncEnumerable<string> StreamResponseAsync(string input, [EnumeratorCancellation] CancellationToken ct = default)
+    public class FakeChatService : IChatService
     {
-        foreach (var part in new[] { "Fejk", "owa ", "odpowiedź" })
+        public async IAsyncEnumerable<string> StreamResponseAsync(string input, [EnumeratorCancellation] CancellationToken ct = default)
         {
-            await Task.Delay(100, ct);
-            yield return part;
+            foreach (var part in new[] { "Fejk", "owa ", "odpowiedź" })
+            {
+                await Task.Delay(100, ct);
+                yield return part;
+            }
         }
     }
 }

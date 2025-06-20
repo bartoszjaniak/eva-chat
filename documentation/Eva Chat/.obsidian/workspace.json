@@ -36,6 +36,20 @@
             }
           },
           {
+            "id": "4920db5918de0830",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Wyzwania.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Wyzwania"
+            }
+          },
+          {
             "id": "2ee2def4d4867f1d",
             "type": "leaf",
             "state": {
@@ -50,7 +64,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -123,7 +137,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Działanie aplikacji.md",
+                "file": "Wyzwania.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Działanie aplikacji"
+              "title": "Backlinks for Wyzwania"
             }
           },
           {
@@ -142,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Działanie aplikacji.md",
+                "file": "Wyzwania.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Działanie aplikacji"
+              "title": "Outgoing links from Wyzwania"
             }
           },
           {
@@ -171,13 +185,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Działanie aplikacji.md",
+                "file": "Wyzwania.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Działanie aplikacji"
+              "title": "Outline of Wyzwania"
             }
           }
         ]
@@ -197,10 +211,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b6c76e03098ee627",
+  "active": "4920db5918de0830",
   "lastOpenFiles": [
-    "Architektura/Untitled.md",
     "Działanie aplikacji.md",
+    "Wyzwania.md",
+    "Architektura/Untitled.md",
     "TODO.md",
     "Architektura/Założenia/Streamowanie odpowiedzi.md",
     "Architektura/ADR/Wykorzystamy MediaR do obsługi logiki przetwarzania requestów.md",
