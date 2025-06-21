@@ -1,15 +1,21 @@
 <mat-sidenav-container class="h-screen">
     <mat-sidenav #drawer mode="side" [(opened)]="opened" class="w-72 h-screen shadow-lg relative">
-        <div class="h-full  overflow-y-hidden bg-[#fdfdfd]">
+        <div class="h-full flex flex-col overflow-y-hidden shadow bg-[#fdfdfd]">
             <img src="/assets/logo.png" alt="Logo" class="w-auto mb-4 mt-2 h-auto" />
-            <app-sidebar-container />
+            <app-sidebar-container class="flex-1" />
+            <button mat-icon-button (click)="opened = false">
+                <mat-icon>menu_open</mat-icon>
+            </button>
         </div>
+
     </mat-sidenav>
 
     <mat-sidenav-content class="bg-[#fdfdfd]">
-        <!-- <button mat-icon-button class="absolute left-0" (click)="opened = !opened">
-            <mat-icon>{{ opened ? 'chevron_left' : 'menu' }}</mat-icon>
-        </button> -->
+        @if(!opened) {
+        <button mat-icon-button (click)="opened = !opened">
+            <mat-icon>menu</mat-icon>
+        </button>
+    }
         <main class="flex-1 flex flex-col h-full">
             <router-outlet />
         </main>
