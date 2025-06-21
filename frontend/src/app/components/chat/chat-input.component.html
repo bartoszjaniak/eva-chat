@@ -9,6 +9,20 @@
     cdkAutosizeMinRows="1"
     cdkAutosizeMaxRows="5"></textarea>
 </mat-form-field>
-<button mat-icon-button color="primary" (click)="sendMessage()">
+
+@if (actionStatus() === 'idle' || actionStatus() === 'error') {
+  <button mat-icon-button color="primary"
+          (click)="sendMessage()"
+          [disabled]="!messageControl.valid">
     <mat-icon>arrow_circle_up</mat-icon>
-</button>
+  </button>
+} @else if (actionStatus() === 'pending') {
+  <button mat-icon-button color="primary" disabled>
+    <mat-icon class="animate-spin">autorenew</mat-icon>
+  </button>
+} @else if (actionStatus() === 'generating') {
+  <button mat-icon-button color="warn"
+          (click)="pauseGeneration()">
+    <mat-icon>pause</mat-icon>
+  </button>
+}

@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { ResponseStatus } from '../models/response-status';
 
 const API_URL = 'http://localhost:5278/api/chat/message'; // Zastąp rzeczywistym URL API
 
@@ -7,12 +8,14 @@ export class ChatStreamService {
     private initialValue = {sessionId: null, message: ''};
 
     public responseSignal = signal<{sessionId?: string | null, message: string}>(this.initialValue);
-    public statusSignal = signal<'idle' | 'generating' | 'error'>('idle'); // sygnał do statusu
+
+    public statusSignal = signal<ResponseStatus>('idle');
 
 
     async streamChatResponse(params: {sessionId: string | null, content: string}): Promise<void> {
         try {
             this.responseSignal.set(this.initialValue);
+               this.statusSignal.set('pending');
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
