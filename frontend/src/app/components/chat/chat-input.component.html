@@ -1,8 +1,15 @@
 <form class="flex items-center gap-2" autocomplete="off">
-  <mat-form-field class="flex-1" appearance="outline">
-    <input matInput placeholder="Napisz wiadomość..." />
-  </mat-form-field>
+<mat-form-field class="flex-1" appearance="fill">
+  <textarea
+    aria-label="Wiadomość dla czata"
+    placeholder="Czy masz do mnie jakieś pytanie?"
+    matInput
+    cdkTextareaAutosize
+    #autosize="cdkTextareaAutosize"
+    cdkAutosizeMinRows="1"
+    cdkAutosizeMaxRows="5"></textarea>
+</mat-form-field>
   <button mat-icon-button color="primary" type="submit">
-    <mat-icon>send</mat-icon>
+    <mat-icon>arrow_circle_up</mat-icon>
   </button>
 </form>

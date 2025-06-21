@@ -7,7 +7,10 @@ import { ChatInputComponent } from '../components/chat/chat-input.component';
   selector: 'app-chat-session-container',
   imports: [ChatMessagesComponent, ChatInputComponent],
   templateUrl: './chat-session-container.component.html',
-  styleUrls: ['./chat-session-container.component.scss']
+  styleUrls: ['./chat-session-container.component.scss'],
+  host: {
+    class: 'flex flex-col h-full'
+  }
 })
 export class ChatSessionContainerComponent {
   sessionId: string | null = null;

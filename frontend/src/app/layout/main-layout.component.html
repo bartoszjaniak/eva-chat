@@ -1,12 +1,17 @@
-<div class="flex h-screen">
-  <!-- Sidebar -->
-  <aside class="w-72 flex flex-col h-full">
-    <img src="/assets/logo.png" alt="Logo" class="w-auto mb-4 mt-2" />
-    <app-sidebar-container class="h-full" />
-  </aside>
+<mat-sidenav-container class="h-screen">
+    <mat-sidenav #drawer mode="side" [(opened)]="opened" class="w-72 h-screen shadow-lg relative">
+        <div class="h-full  overflow-y-hidden bg-[#fdfdfd]">
+            <img src="/assets/logo.png" alt="Logo" class="w-auto mb-4 mt-2 h-auto" />
+            <app-sidebar-container />
+        </div>
+    </mat-sidenav>
 
-  <!-- Main chat section -->
-  <main class="flex-1 flex flex-col bg-gray-100">
-    <router-outlet />
-  </main>
-</div>
+    <mat-sidenav-content class="bg-[#fdfdfd]">
+        <!-- <button mat-icon-button class="absolute left-0" (click)="opened = !opened">
+            <mat-icon>{{ opened ? 'chevron_left' : 'menu' }}</mat-icon>
+        </button> -->
+        <main class="flex-1 flex flex-col h-full">
+            <router-outlet />
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>
