@@ -22,7 +22,25 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 // Register Services
 builder.Services.AddScoped<IChatService, FakeChatService>();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")  // adres frontendu
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();  // jeśli używasz ciasteczek lub auth
+        });
+});
+
+
 var app = builder.Build();
+
+// allow CORS globally
+app.UseCors(MyAllowSpecificOrigins);
 
 // Map controllers
 app.MapControllers();

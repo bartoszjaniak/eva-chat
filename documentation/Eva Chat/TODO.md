@@ -13,6 +13,7 @@
 	- konfiguracja bazy danych
 ⬜️ Przetestować z prawdziwym modelem (opcjonalnie)
 ⬜️ Rozbudować serwis fejkowego czatu by był bardziej zróżnicowany
+⬜️ Konfiguracja CORS do dev
 ⬜️ Testy
 
 
@@ -21,6 +22,7 @@
 ⬜️ Komponent z listą sesji
 ⬜️ Komponent czatu
 ⬜️ Testy
+⬜️ Przenieść konfigurację
 
 
 ## Zostawione na jutro... 

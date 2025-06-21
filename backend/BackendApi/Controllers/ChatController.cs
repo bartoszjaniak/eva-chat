@@ -1,3 +1,4 @@
+using System.Text.Json;
 using BackendApi.DTOs.Chat;
 using BackendApi.MediatR.Commands;
 using MediatR;
@@ -16,11 +17,15 @@ namespace BackendApi.Controllers
         /// Jeśli SessionId jest null, tworzy nową sesję.
         /// </summary>
         [HttpPost("message")]
-        public IAsyncEnumerable<StreamMessageResultDto> SendMessage(
-            [FromBody] StreamMessageCommand cmd,
-            CancellationToken ct)
+    public async Task Stream([FromBody] StreamMessageRequestDto cmd)
         {
-            return _mediator.CreateStream(cmd, ct);
+            Response.ContentType = "application/json";
+            await foreach (var chunk in _mediator.CreateStream(cmd, HttpContext.RequestAborted))
+            {
+                var json = JsonSerializer.Serialize(chunk);
+                await Response.WriteAsync(json + "\n");
+                await Response.Body.FlushAsync();
+            }
         }
     }
 }

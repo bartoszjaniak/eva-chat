@@ -9,7 +9,7 @@ namespace BackendApi.Services.Mocks
         {
             foreach (var part in new[] { "Fejk", "owa ", "odpowiedź" })
             {
-                await Task.Delay(100, ct);
+                await Task.Delay(1000, ct);
                 yield return part;
             }
         }

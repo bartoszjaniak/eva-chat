@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Wyzwania.md",
+                "file": "TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Wyzwania"
+              "title": "TODO"
             }
           },
           {
@@ -227,8 +227,8 @@
   },
   "active": "9d29f634374344a4",
   "lastOpenFiles": [
-    "TODO.md",
     "Wyzwania.md",
+    "TODO.md",
     "Działanie aplikacji.md",
     "Architektura/Untitled.md",
     "Architektura/Założenia/Streamowanie odpowiedzi.md",

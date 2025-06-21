@@ -1,5 +1,6 @@
   <div class="flex-1 overflow-y-auto">
-    <app-chat-messages [messages]="messages" />
+    <app-chat-messages [messages]="messages()" />
+       <div class="status" > {{chatService.statusSignal() }} </div>
   </div>
 
   <div class="p-4 border-t border-gray-200">
