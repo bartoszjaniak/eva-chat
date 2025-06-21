@@ -1,0 +1,16 @@
+<div class="flex flex-col space-y-4 p-4">
+  @for (message of messages; track message) {
+    <div [class.self-end]="message.from === 'user'"
+         [class.self-start]="message.from === 'bot'">
+      <div class="max-w-xl px-4 py-2 rounded-lg"
+           [class.bg-blue-500]="message.from === 'user'"
+           [class.text-white]="message.from === 'user'"
+           [class.ml-auto]="message.from === 'user'"
+           [class.bg-gray-200]="message.from === 'bot'"
+           [class.text-gray-900]="message.from === 'bot'"
+           [class.mr-auto]="message.from === 'bot'">
+        {{ message.text }}
+      </div>
+    </div>
+  }
+</div>
