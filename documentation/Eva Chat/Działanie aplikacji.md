@@ -16,3 +16,8 @@
 1) użytkownik po wejściu w sesję pobiera listę wcześniejszych wiadomości
 2) ~~po przescrollowaniu na górę automatycznie albo po kliknięciu "pobierz wcześniejsze" pobieramy poprzednie X wiadomości~~
 3) po wysłaniu nowej wiadomości scroll wraca do ostatniej wiadomości (smooth)
+
+## Czat
+1) użytkownik może anulować zapytanie
+2) podczas tworzenia sesji przed zwróceniem pierwszej wiadomości użytkownik widzi loader
+3) po załadowaniu pierwszej wiadomości (rozpoczęcie streama) użytkownik widzi pauzę
