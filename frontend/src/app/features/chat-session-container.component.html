@@ -1,7 +1,7 @@
   <div class="flex-1 overflow-y-auto ">
-    <app-chat-messages [messages]="messages()" />
+    <app-chat-messages [messages]="chatStore.entities()" />
   </div>
 
   <div class="p-4 border rounded-lg m-10 border-gray-200">
-    <app-chat-input (send)="onSend($event)" [actionStatus]="chatService.statusSignal()" />
+    <app-chat-input (send)="onSend($event)" [actionStatus]="chatStore.status()" />
   </div>
