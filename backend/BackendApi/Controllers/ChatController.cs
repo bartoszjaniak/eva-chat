@@ -17,7 +17,7 @@ namespace BackendApi.Controllers
         /// Jeśli SessionId jest null, tworzy nową sesję.
         /// </summary>
         [HttpPost("message")]
-    public async Task Stream([FromBody] StreamMessageRequestDto data)
+        public async Task Stream([FromBody] StreamMessageRequestDto data)
         {
             Response.ContentType = "application/json";
 

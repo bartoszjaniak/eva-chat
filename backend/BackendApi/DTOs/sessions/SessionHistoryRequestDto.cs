@@ -1,4 +1,4 @@
-namespace BackendApi.DTOs
+namespace BackendApi.DTOs.Sessions
 {
     public class SessionHistoryRequestDto
     {

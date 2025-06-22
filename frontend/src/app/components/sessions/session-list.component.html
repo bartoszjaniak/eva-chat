@@ -7,12 +7,12 @@
   </div>
   <h2 class="text-lg font-semibold mb-4 text-gray-900">Twoje czaty</h2>
   <ul class="flex-1 overflow-y-auto">
-    @for (session of sessions; track session.id) {
+    @for (session of sessions(); track session.id) {
       <li >
         <a [routerLink]="['/chat', session.id]"
         class="block w-full h-full rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors"
         routerLinkActive="bg-gray-100">
-          {{ session.name }}
+          {{ session.title || 'Czat bez tytułu' }}
         </a>
       </li>
     }

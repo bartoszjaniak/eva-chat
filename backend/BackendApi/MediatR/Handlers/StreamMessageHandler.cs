@@ -37,7 +37,7 @@ namespace BackendApi.MediatR.Handlers
             }
             else
             {
-                session = await _chatRepository.CreateSessionAsync(ct);
+                session = await _chatRepository.CreateSessionAsync(request.Content ,ct);
             }
 
             var userMsg = new Message

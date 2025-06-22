@@ -1,27 +1,52 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map, Observable, tap } from "rxjs";
+import { Session, SessionSummary } from "../models/session";
 import { Message } from "../models/message";
-import { ChatStore } from "../stores/chat.store";
-import { Observable, of } from "rxjs";
+
+const API_URL = 'http://localhost:5278/api/session'; // TODO: przenieś do environment
+ type SessionMessagesResponse = {
+    messages: {
+        content:string;
+        createdAt: Date;
+        id: number;
+        isFromBot: boolean;
+        rating: number;
+        sessionId: string;
+
+    }[];
+    startedAt: Date;
+};
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-    private sessions: Record<string, Message[]> = {
-        '1': [
-            { id: '1', type: 'user', text: 'Cześć! Co robimy w nowym projekcie?' },
-            { id: '2', type: 'bot', text: 'Możemy zacząć od analizy wymagań.' }
-        ],
-        '2': [
-            { id: '3', type: 'user', text: 'Masz pomysł na startup?' },
-            { id: '4', type: 'bot', text: 'Tak! Może aplikacja do zarządzania czasem?' }
-        ],
-        '3': [
-            { id: '5', type: 'user', text: 'Hej, co słychać?' },
-            { id: '6', type: 'bot', text: 'Wszystko dobrze, jak u Ciebie?' }
-        ]
-    };
+    constructor(private http: HttpClient) { }
+
+    public getSessions(): Observable<SessionSummary[]> {
+        return this.http.get<{ sessions: { sessionId: string; title: string; startedAt: Date }[] }>(`${API_URL}`).pipe(
+            map(response =>
+                response.sessions.map(response => ({
+                    id: response.sessionId,
+                    title: response.title || 'Nowa sesja',
+                    startedAt: response.startedAt
+                } as Session))
+            ));
+    }
 
 
-    getSessionMessages(sessionId: string): Observable<Message[]> {
-        return of(this.sessions[sessionId] || []);
+
+    public getSessionMessages(sessionId: string): Observable<Message[]> {
+        // Zwraca historię wiadomości w danej sesji
+        return this.http.get<SessionMessagesResponse>(`${API_URL}/${sessionId}/messages`).pipe(
+            map(response => response.messages.map(res => ({
+                id: res.id.toString(),
+                type: res.isFromBot ? 'bot' : 'user',
+                text: res.content,
+                createdAt: res.createdAt,
+                sessionId: res.sessionId,
+                rating: res.rating
+            } as Message)) || []
+            )
+        );
     }
 }

@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule, MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { ChatStore } from './stores/chat.store';
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { ChatStore } from './stores/chat.store';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [
     { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'outlined' } }

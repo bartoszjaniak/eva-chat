@@ -2,12 +2,12 @@ import { EnvironmentInjector, inject, Injector } from '@angular/core';
 import { ChatStreamService } from '../services/chat.service';
 import { Message } from '../models/message';
 import { signalStore, withState, withMethods, patchState, withHooks, withProps } from '@ngrx/signals';
-import { addEntity, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeAllEntities, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { ResponseStatus } from '../models/response-status';
 import { SessionService } from '../services/session.service';
-import { distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
-import { tapResponse } from '@ngrx/operators';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 let currentAbortController: AbortController | null = null;
 
@@ -20,13 +20,21 @@ export const ChatStore = signalStore(
     }),
     withProps((store) => ({
         chatService: inject(ChatStreamService),
-        sessionService: inject(SessionService)
+        sessionService: inject(SessionService),
+        location:inject(Location),
+        route: inject(ActivatedRoute)
     })),
     withMethods((store) => ({
+        initNewSession() {
+            patchState(store, { sessionId: null, status: 'idle' });
+            patchState(store, removeAllEntities());
+        },
         async loadMessages(sessionId: string) {
             patchState(store, { sessionId, status: 'loading' });
             try {
+                patchState(store, removeAllEntities());
                 const messages = await store.sessionService.getSessionMessages(sessionId).toPromise();
+
                 patchState(store, setEntities(messages || []));
                 patchState(store, { status: 'idle' });
             } catch (error) {
@@ -40,6 +48,7 @@ export const ChatStore = signalStore(
             let generatedMessage = currentMessages.find(msg => msg.type === 'generated');
 
             const sessionId = store.sessionId();
+            console.log('Sending message:', message, 'Session ID:', sessionId);
             patchState(store, { status: 'pending' });
             currentAbortController = new AbortController();
             try {
@@ -50,6 +59,7 @@ export const ChatStore = signalStore(
 
                     if (!sessionId) {
                         patchState(store, { sessionId: SessionId });
+                        store.location.go(`/chat/${SessionId}`);
                     }
 
                     if (generatedMessage) {
@@ -86,5 +96,16 @@ export const ChatStore = signalStore(
                 patchState(store, { status: 'idle' });
             }
         }
-    }))
+    })),
+    withHooks({
+        onInit: (store) => {
+            // Initialize the store or perform any setup needed
+            const sessionId = store.route.snapshot.paramMap.get('id');
+            if (sessionId) {
+                store.loadMessages(sessionId);
+            } else {
+                store.initNewSession();
+            }
+        }
+    }),
 );

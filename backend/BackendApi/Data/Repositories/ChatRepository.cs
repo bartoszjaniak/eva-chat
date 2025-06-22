@@ -17,14 +17,18 @@ namespace BackendApi.Data.Repositories
                 .Select(s => new SessionListItemDto
                 {
                     SessionId = s.Id,
-                    StartedAt = s.StartedAt
+                    StartedAt = s.StartedAt,
+                    Title = s.Title
                 })
                 .ToListAsync(ct);
         }
 
-        public async Task<ChatSession> CreateSessionAsync(CancellationToken ct)
+        public async Task<ChatSession> CreateSessionAsync(string userMessage,  CancellationToken ct)
         {
-            var session = new ChatSession { StartedAt = DateTime.UtcNow };
+            var session = new ChatSession {
+                Title = userMessage,
+                StartedAt = DateTime.UtcNow };
+
             _db.ChatSessions.Add(session);
             await _db.SaveChangesAsync(ct);
             return session;
@@ -32,7 +36,9 @@ namespace BackendApi.Data.Repositories
 
         public async Task<ChatSession> GetSessionAsync(Guid sessionId, CancellationToken ct)
         {
-            return await _db.ChatSessions.FindAsync(new object[] { sessionId }, ct)
+            return await _db.ChatSessions
+                .Include(s => s.Messages)
+                .FirstOrDefaultAsync(s => s.Id == sessionId, ct)
                 ?? throw new InvalidOperationException("Nie znaleziono sesji");
         }
 

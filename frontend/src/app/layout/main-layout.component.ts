@@ -7,11 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-main-layout',
-  standalone: true,
   imports: [SidebarContainerComponent, RouterModule, MatSidenavModule, MatIconModule, MatButtonModule],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
-  opened = true;
+  opened = false;
 }

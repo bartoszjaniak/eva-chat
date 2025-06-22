@@ -13,5 +13,10 @@ namespace BackendApi.DTOs.sessions
         /// Data utworzenia sesji
         /// </summary>
         public DateTime StartedAt { get; set; }
+
+        /// <summary>
+        /// Tytuł sesji
+        /// </summary>
+        public string Title { get; set; } = string.Empty;
     }
 }

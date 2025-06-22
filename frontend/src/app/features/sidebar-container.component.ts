@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { SessionListComponent } from '../components/sessions/session-list.component';
+import { SessionStore } from '../stores/session.store';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar-container',
@@ -7,4 +9,6 @@ import { SessionListComponent } from '../components/sessions/session-list.compon
   templateUrl: './sidebar-container.component.html',
   styleUrls: ['./sidebar-container.component.scss']
 })
-export class SidebarContainerComponent {}
+export class SidebarContainerComponent {
+    protected sessionsStore = inject(SessionStore);
+}

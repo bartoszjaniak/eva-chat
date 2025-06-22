@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Session } from '../../models/session';
 
 @Component({
   selector: 'app-session-list',
@@ -11,11 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./session-list.component.scss']
 })
 export class SessionListComponent {
-  sessions = [
-    { id: '1', name: 'Nowy projekt' },
-    { id: '2', name: 'Pomysły na startup' },
-    { id: '3', name: 'Prywatny czat' }
-  ];
+  public sessions = input<Session[]>([]);
+  public status = input('loading'); // 'loading' | 'error' | 'success'
 
   constructor(private router: Router) {}
 
