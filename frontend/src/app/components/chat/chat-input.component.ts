@@ -18,7 +18,7 @@ import { ResponseStatus } from '../../models/response-status';
 })
 export class ChatInputComponent {
   @Output() send = new EventEmitter<string>();
-  @Output() pause = new EventEmitter<void>();
+  @Output() abort = new EventEmitter<void>();
 
   public actionStatus = input<ResponseStatus>('idle');
 
@@ -36,6 +36,6 @@ export class ChatInputComponent {
   }
 
   pauseGeneration() {
-    this.pause.emit();
+    this.abort.emit();
   }
 }

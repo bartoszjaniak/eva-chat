@@ -3,5 +3,5 @@
   </div>
 
   <div class="p-4 border rounded-lg m-10 border-gray-200">
-    <app-chat-input (send)="onSend($event)" [actionStatus]="chatStore.status()" />
+    <app-chat-input (send)="onSend($event)" (abort)="onAbort()" [actionStatus]="chatStore.status()" />
   </div>

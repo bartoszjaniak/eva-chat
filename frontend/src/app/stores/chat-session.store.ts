@@ -7,6 +7,7 @@ import { signalStore, withState, withComputed, withMethods, patchState, withHook
 import { addEntity, setEntities, updateAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { ResponseStatus } from '../models/response-status';
 
+let currentAbortController: AbortController | null = null;
 
 export const ChatStore = signalStore(
     { providedIn: 'root' },
@@ -35,8 +36,9 @@ export const ChatStore = signalStore(
 
             const sessionId = store.sessionId();
             patchState(store, { status: 'pending' });
+            currentAbortController = new AbortController();
             try {
-                for await (const { SessionId, Chunk } of chatService.streamChatResponse({ sessionId, content: message })) {
+                for await (const { SessionId, Chunk } of chatService.streamChatResponse({ sessionId, content: message }, currentAbortController.signal)) {
                     if (SessionId) {
                         patchState(store, { status: 'generating' });
                     }
@@ -63,7 +65,20 @@ export const ChatStore = signalStore(
 
                 patchState(store, { status: 'idle' });
             } catch (error) {
-                patchState(store, { status: 'error' });
+                if ((error as any).name === 'AbortError') {
+                    patchState(store, { status: 'idle' });
+                } else {
+                    patchState(store, { status: 'error' });
+                }
+            } finally {
+                currentAbortController = null;
+            }
+        },
+        stopGenerating() {
+            if (currentAbortController) {
+                currentAbortController.abort();
+                currentAbortController = null;
+                patchState(store, { status: 'idle' });
             }
         }
     }))

@@ -33,4 +33,8 @@ export class ChatSessionContainerComponent {
     onSend(message: string) {
         this.chatStore.sendMessage(message);
     }
+
+    onAbort() {
+        this.chatStore.stopGenerating();
+    }
 }

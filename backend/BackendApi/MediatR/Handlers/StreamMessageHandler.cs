@@ -50,28 +50,36 @@ namespace BackendApi.MediatR.Handlers
             await _chatRepository.AddMessageAsync(userMsg, ct);
 
             var botResponseBuilder = new System.Text.StringBuilder();
-            await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct).WithCancellation(ct))
+            try
             {
-                botResponseBuilder.Append(chunk);
-
-                yield return new StreamMessageResultDto
+                await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct))
                 {
-                    SessionId = session.Id,
-                    Chunk     = chunk
-                };
+                    botResponseBuilder.Append(chunk);
+
+                    yield return new StreamMessageResultDto
+                    {
+                        SessionId = session.Id,
+                        Chunk     = chunk
+                    };
+                }
             }
-
-            // Zapisz całą odpowiedź bota do bazy tylko raz (jeśli coś wygenerowano)
-            if (botResponseBuilder.Length > 0)
+            finally
             {
-                var botMsg = new Message
+                // Zapisz całą odpowiedź bota do bazy tylko raz (jeśli coś wygenerowano)
+                if (botResponseBuilder.Length > 0)
                 {
-                    ChatSessionId = session.Id,
-                    Content       = botResponseBuilder.ToString(),
-                    IsFromBot     = true,
-                    CreatedAt     = DateTime.UtcNow
-                };
-                await _chatRepository.AddMessageAsync(botMsg, ct);
+                    Console.WriteLine($"Zapisuję odpowiedź bota do sesji {session.Id}: {botResponseBuilder}");
+
+                    var botMsg = new Message
+                    {
+                        ChatSessionId = session.Id,
+                        Content       = botResponseBuilder.ToString(),
+                        IsFromBot     = true,
+                        CreatedAt     = DateTime.UtcNow
+                    };
+
+                    await _chatRepository.AddMessageAsync(botMsg, CancellationToken.None); // Save the complete bot response even if the stream is cancelled
+                }
             }
         }
     }

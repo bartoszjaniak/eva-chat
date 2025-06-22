@@ -7,12 +7,13 @@ const API_URL = 'http://localhost:5278/api/chat/message'; // Zastąp rzeczywisty
 @Injectable({ providedIn: 'root' })
 export class ChatStreamService {
 
-  async *streamChatResponse(params: { sessionId: string | null, content: string }) {
+  async *streamChatResponse(params: { sessionId: string | null, content: string }, abortSignal?: AbortSignal) {
         try {
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(params)
+                body: JSON.stringify(params),
+                signal: abortSignal
             });
 
             if (!res.body) throw new Error("Nie można odczytać strumienia odpowiedzi");
@@ -31,8 +32,11 @@ export class ChatStreamService {
                 }
             }
         } catch (error) {
+            if ((error as any).name === 'AbortError') {
+                // Obsługa przerwania
+                return;
+            }
             console.error('Błąd podczas strumieniowania odpowiedzi:', error);
-            // Możesz rzucić wyjątek albo yieldować specjalny obiekt błędu
             throw error;
         }
     }
