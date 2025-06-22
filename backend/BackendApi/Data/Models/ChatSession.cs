@@ -1,3 +1,5 @@
+using BackendApi.Data.Models;
+
 namespace BackendApi.Data.Models
 {
     public class ChatSession

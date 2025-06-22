@@ -1,6 +1,7 @@
+using BackendApi.DTOs.Chat;
 using MediatR;
 
 namespace BackendApi.MediatR.Commands
 {
-    public record RateMessageCommand(int MessageId, Rating Rating) : IRequest<bool>;
+    public record RateMessageCommand(Guid MessageId, RatingDto Rating) : IRequest<bool>;
 }

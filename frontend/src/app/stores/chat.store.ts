@@ -7,6 +7,7 @@ import { ResponseStatus } from '../models/response-status';
 import { SessionService } from '../services/session.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { RateMessageAction } from '../models/rate-message';
 
 
 let currentAbortController: AbortController | null = null;
@@ -95,6 +96,16 @@ export const ChatStore = signalStore(
                 currentAbortController = null;
                 patchState(store, { status: 'idle' });
             }
+        },
+        rateMessage(action: RateMessageAction){
+            return store.chatService.rateMessage(action).toPromise().then(() => {
+                const message = store.entities().find(msg => msg.id === action.messageId);
+                if (message) {
+                    patchState(store, updateEntity({ id: message.id, changes: { rating: action.rating } }));
+                }
+            }).catch(error => {
+                console.error('Error rating message:', error);
+            });
         }
     }))
 );

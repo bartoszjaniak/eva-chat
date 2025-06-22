@@ -1,4 +1,6 @@
 using System.Text.Json;
+using BackendApi.Data.Models;
+using BackendApi.DTOs;
 using BackendApi.DTOs.Chat;
 using BackendApi.MediatR.Commands;
 using MediatR;
@@ -29,6 +31,17 @@ namespace BackendApi.Controllers
                 await Response.WriteAsync(json + "\n");
                 await Response.Body.FlushAsync();
             }
+        }
+
+         /// <summary>
+        /// Endpoint do oceny wiadomości w sesji
+        /// </summary>
+        [HttpPost("message/rate")]
+        public async Task<IActionResult> RateMessage([FromBody] RateMessageDto dto)
+        {
+            var result = await _mediator.Send(new RateMessageCommand(dto.MessageId, dto.Rating));
+            if (!result) return NotFound();
+            return Ok();
         }
     }
 }

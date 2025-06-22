@@ -1,15 +1,9 @@
-using BackendApi.Data;
 using BackendApi.Data.Models;
-using BackendApi.DTOs;
 using BackendApi.DTOs.Chat;
 using BackendApi.Interfaces;
 using BackendApi.MediatR.Commands;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using BackendApi.Data.Repositories;
 
 namespace BackendApi.MediatR.Handlers

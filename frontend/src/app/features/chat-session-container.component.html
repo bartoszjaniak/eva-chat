@@ -1,5 +1,5 @@
   <div class="flex-1 overflow-y-auto ">
-    <app-chat-messages [messages]="chatStore.entities()" />
+    <app-chat-messages [messages]="chatStore.entities()" (rateMessage)="chatStore.rateMessage($event)" />
   </div>
 
   <div class="p-4 border rounded-lg m-10 border-gray-200">

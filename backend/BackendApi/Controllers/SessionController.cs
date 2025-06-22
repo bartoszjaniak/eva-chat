@@ -1,4 +1,6 @@
+using BackendApi.DTOs;
 using BackendApi.DTOs.sessions;
+using BackendApi.MediatR.Commands;
 using BackendApi.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

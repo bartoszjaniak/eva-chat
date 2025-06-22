@@ -26,11 +26,11 @@ namespace BackendApi.MediatR.Handlers
                     .OrderBy(m => m.CreatedAt)
                     .Select(m => new MessageDto
                     {
-                        Id = m.Id.GetHashCode(),
+                        Id = m.Id,
                         SessionId = session.Id,
                         Content = m.Content,
                         IsFromBot = m.IsFromBot,
-                        Rating = m.Rating,
+                        Rating = (RatingDto)m.Rating,
                         CreatedAt = m.CreatedAt
                     }).ToList()
             };

@@ -1,15 +1,19 @@
+using BackendApi.DTOs.Chat;
+
 namespace BackendApi.DTOs
 {
+
+
     public class RateMessageDto
     {
         /// <summary>
         /// Identyfikator wiadomości
         /// </summary>
-        public int MessageId { get; set; }
+        public Guid MessageId { get; set; }
 
         /// <summary>
-        /// Ocena wiadomości (true = like, false = dislike)
+        /// Ocena wiadomości (Rating enum)
         /// </summary>
-        public bool IsLiked { get; set; }
+        public RatingDto Rating { get; set; }
     }
 }

@@ -1,13 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ResponseStatus } from '../models/response-status';
 import { ChatStore } from '../stores/chat.store';
+import { HttpClient } from '@angular/common/http';
+import { RateMessageAction } from '../models/rate-message';
 
 const API_URL = 'http://localhost:5278/api/chat/message'; // Zastąp rzeczywistym URL API
 
 @Injectable({ providedIn: 'root' })
 export class ChatStreamService {
+    private http = inject(HttpClient);
 
-  async *streamChatResponse(params: { sessionId: string | null, content: string }, abortSignal?: AbortSignal) {
+    async *streamChatResponse(params: { sessionId: string | null, content: string }, abortSignal?: AbortSignal) {
         try {
             const res = await fetch(API_URL, {
                 method: 'POST',
@@ -40,5 +43,9 @@ export class ChatStreamService {
             console.error('Błąd podczas strumieniowania odpowiedzi:', error);
             throw error;
         }
+    }
+
+    rateMessage(action: RateMessageAction) {
+        return this.http.post(API_URL + '/rate', action);
     }
 }

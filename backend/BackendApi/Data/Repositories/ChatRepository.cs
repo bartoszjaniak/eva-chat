@@ -1,5 +1,4 @@
 using BackendApi.Data.Models;
-using BackendApi.Data.Repositories;
 using BackendApi.DTOs.sessions;
 using Microsoft.EntityFrameworkCore;
 

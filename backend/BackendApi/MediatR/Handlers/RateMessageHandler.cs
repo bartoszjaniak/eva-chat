@@ -1,5 +1,7 @@
 using MediatR;
 using BackendApi.MediatR.Commands;
+using Microsoft.EntityFrameworkCore;
+using BackendApi.Data.Models;
 
 namespace BackendApi.MediatR.Handlers
 {
@@ -10,10 +12,10 @@ namespace BackendApi.MediatR.Handlers
 
         public async Task<bool> Handle(RateMessageCommand req, CancellationToken ct)
         {
-            var msg = await _db.Messages.FindAsync(new object[]{ req.MessageId }, ct);
+            var msg = await _db.Messages.FirstOrDefaultAsync(m => m.Id == req.MessageId, ct) ?? throw new InvalidOperationException("Nie znaleziono wiadomości");
 
             if (msg == null) return false;
-            msg.Rating = req.Rating;
+            msg.Rating = (Rating)req.Rating;
 
             await _db.SaveChangesAsync(ct);
 
