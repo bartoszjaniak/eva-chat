@@ -35,6 +35,13 @@ export class ChatInputComponent {
     }
   }
 
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey && this.actionStatus() === 'idle') {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
+
   pauseGeneration() {
     this.abort.emit();
   }
