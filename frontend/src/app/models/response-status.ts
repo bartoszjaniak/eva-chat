@@ -1,1 +1,1 @@
-export type ResponseStatus = 'idle' | 'pending' | 'generating' | 'error';
+export type ResponseStatus = 'loading' | 'idle' | 'pending' | 'generating' | 'error';

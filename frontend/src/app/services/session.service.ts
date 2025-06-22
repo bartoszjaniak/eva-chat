@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Message } from "../models/message";
-import { ChatStore } from "../stores/chat-session.store";
+import { ChatStore } from "../stores/chat.store";
+import { Observable, of } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-
-    private chatStore = new ChatStore();
     private sessions: Record<string, Message[]> = {
         '1': [
             { id: '1', type: 'user', text: 'Cześć! Co robimy w nowym projekcie?' },
@@ -21,12 +20,8 @@ export class SessionService {
         ]
     };
 
-    getSessionMessages(sessionId: string): Message[] {
-        return this.sessions[sessionId] || [];
-    }
 
-    setSession(sessionId: string) {
-        const messages = this.getSessionMessages(sessionId);
-        this.chatStore.setMessages(messages);
+    getSessionMessages(sessionId: string): Observable<Message[]> {
+        return of(this.sessions[sessionId] || []);
     }
 }

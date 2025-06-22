@@ -1,11 +1,13 @@
-import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { EnvironmentInjector, inject, Injector } from '@angular/core';
 import { ChatStreamService } from '../services/chat.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Message } from '../models/message';
-import { signalStore, withState, withComputed, withMethods, patchState, withHooks } from '@ngrx/signals';
-import { addEntity, setEntities, updateAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { signalStore, withState, withMethods, patchState, withHooks, withProps } from '@ngrx/signals';
+import { addEntity, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { ResponseStatus } from '../models/response-status';
+import { SessionService } from '../services/session.service';
+import { distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
+import { tapResponse } from '@ngrx/operators';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 let currentAbortController: AbortController | null = null;
 
@@ -16,18 +18,21 @@ export const ChatStore = signalStore(
         sessionId: null as string | null,
         status: 'idle' as ResponseStatus
     }),
-    withMethods((store, chatService = inject(ChatStreamService)) => ({
-        loadMessages: (sessionId: string) => {
-
-        },
-        addMessage: (item: Message) => {
-            patchState(store, addEntity(item));
-        },
-        setMessages: (messages: Message[]) => {
-            patchState(store, setEntities(messages));
-        },
-        setStatus: (status: ResponseStatus) => {
-            patchState(store, { status });
+    withProps((store) => ({
+        chatService: inject(ChatStreamService),
+        sessionService: inject(SessionService)
+    })),
+    withMethods((store) => ({
+        async loadMessages(sessionId: string) {
+            patchState(store, { sessionId, status: 'loading' });
+            try {
+                const messages = await store.sessionService.getSessionMessages(sessionId).toPromise();
+                patchState(store, setEntities(messages || []));
+                patchState(store, { status: 'idle' });
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                patchState(store, { status: 'error' });
+            }
         },
         async sendMessage(message: string) {
             patchState(store, addEntity({ id: crypto.randomUUID(), type: 'user', text: message } as Message));
@@ -38,12 +43,12 @@ export const ChatStore = signalStore(
             patchState(store, { status: 'pending' });
             currentAbortController = new AbortController();
             try {
-                for await (const { SessionId, Chunk } of chatService.streamChatResponse({ sessionId, content: message }, currentAbortController.signal)) {
+                for await (const { SessionId, MessageId, Chunk } of store.chatService.streamChatResponse({ sessionId, content: message }, currentAbortController.signal)) {
                     if (SessionId) {
                         patchState(store, { status: 'generating' });
                     }
 
-                    if(!sessionId) {
+                    if (!sessionId) {
                         patchState(store, { sessionId: SessionId });
                     }
 
@@ -52,7 +57,7 @@ export const ChatStore = signalStore(
                         patchState(store, updateEntity({ id: generatedMessage.id, changes: { text: generatedMessage.text } }));
                     } else {
                         generatedMessage = {
-                            id: crypto.randomUUID(),
+                            id: MessageId,
                             type: 'generated',
                             text: Chunk
                         };

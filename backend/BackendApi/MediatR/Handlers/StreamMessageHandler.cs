@@ -50,6 +50,7 @@ namespace BackendApi.MediatR.Handlers
             await _chatRepository.AddMessageAsync(userMsg, ct);
 
             var botResponseBuilder = new System.Text.StringBuilder();
+            var messageId = Guid.NewGuid(); // Unique ID for the message, can be used for tracking
             try
             {
                 await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct))
@@ -59,23 +60,22 @@ namespace BackendApi.MediatR.Handlers
                     yield return new StreamMessageResultDto
                     {
                         SessionId = session.Id,
-                        Chunk     = chunk
+                        MessageId = messageId,
+                        Chunk = chunk
                     };
                 }
             }
             finally
             {
-                // Zapisz całą odpowiedź bota do bazy tylko raz (jeśli coś wygenerowano)
                 if (botResponseBuilder.Length > 0)
                 {
-                    Console.WriteLine($"Zapisuję odpowiedź bota do sesji {session.Id}: {botResponseBuilder}");
-
                     var botMsg = new Message
                     {
+                        Id = messageId,
                         ChatSessionId = session.Id,
-                        Content       = botResponseBuilder.ToString(),
-                        IsFromBot     = true,
-                        CreatedAt     = DateTime.UtcNow
+                        Content = botResponseBuilder.ToString(),
+                        IsFromBot = true,
+                        CreatedAt = DateTime.UtcNow
                     };
 
                     await _chatRepository.AddMessageAsync(botMsg, CancellationToken.None); // Save the complete bot response even if the stream is cancelled

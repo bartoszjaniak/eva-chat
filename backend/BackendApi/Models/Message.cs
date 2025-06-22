@@ -1,6 +1,6 @@
 public class Message
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public Guid ChatSessionId { get; set; }
     public required string Content { get; set; }
     public bool IsFromBot { get; set; }

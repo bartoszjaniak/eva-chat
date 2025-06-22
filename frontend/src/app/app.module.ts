@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule, MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
-import { ChatStore } from './stores/chat-session.store';
+import { ChatStore } from './stores/chat.store';
 
 @NgModule({
   imports: [

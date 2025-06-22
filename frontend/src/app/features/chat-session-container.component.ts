@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatMessagesComponent } from '../components/chat/chat-messages.component';
 import { ChatInputComponent } from '../components/chat/chat-input.component';
-import { ChatStore } from '../stores/chat-session.store';
+import { ChatStore } from '../stores/chat.store';
 
 @Component({
     selector: 'app-chat-session-container',
@@ -23,8 +23,6 @@ export class ChatSessionContainerComponent {
             // Jeśli jest id, załaduj przykładowe wiadomości
             if (sessionId) {
                 this.chatStore.loadMessages(sessionId);
-            } else {
-                this.chatStore.setMessages([]);
             }
         });
 

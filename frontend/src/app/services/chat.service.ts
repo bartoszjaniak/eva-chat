@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ResponseStatus } from '../models/response-status';
-import { ChatStore } from '../stores/chat-session.store';
+import { ChatStore } from '../stores/chat.store';
 
 const API_URL = 'http://localhost:5278/api/chat/message'; // Zastąp rzeczywistym URL API
 
@@ -27,8 +27,8 @@ export class ChatStreamService {
                 done = doneReading;
                 if (value) {
                     const chunk = decoder.decode(value, { stream: true });
-                    const parsedChunk = JSON.parse(chunk) as { SessionId: string, Chunk: string; };
-                    yield parsedChunk; // yield zamiast wrzucania do store!
+                    const parsedChunk = JSON.parse(chunk) as { SessionId: string; MessageId: string; Chunk: string; };
+                    yield parsedChunk;
                 }
             }
         } catch (error) {
@@ -36,6 +36,7 @@ export class ChatStreamService {
                 // Obsługa przerwania
                 return;
             }
+
             console.error('Błąd podczas strumieniowania odpowiedzi:', error);
             throw error;
         }
