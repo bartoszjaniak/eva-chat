@@ -1,3 +1,4 @@
+using BackendApi.Data.Repositories;
 using BackendApi.Interfaces;
 using BackendApi.Services.Mocks;
 using MediatR;
@@ -21,6 +22,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 
 // Register Services
 builder.Services.AddScoped<IChatService, FakeChatService>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

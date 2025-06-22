@@ -10,18 +10,19 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using BackendApi.Data.Repositories;
 
 namespace BackendApi.MediatR.Handlers
 {
     public class StreamMessageHandler
         : IStreamRequestHandler<StreamMessageCommand, StreamMessageResultDto>
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IChatRepository _chatRepository;
         private readonly IChatService _chatService;
 
-        public StreamMessageHandler(ApplicationDbContext db, IChatService chatService)
+        public StreamMessageHandler(IChatRepository chatRepository, IChatService chatService)
         {
-            _db = db;
+            _chatRepository = chatRepository;
             _chatService = chatService;
         }
 
@@ -29,52 +30,36 @@ namespace BackendApi.MediatR.Handlers
             StreamMessageCommand request,
             [EnumeratorCancellation] CancellationToken ct)
         {
-            // 1. Utworzenie lub pobranie sesji
-            ChatSession session = new()
+            ChatSession session;
+            if (request.SessionId.HasValue)
             {
-                StartedAt = DateTime.UtcNow,
-                Id = new Guid() // Generowanie nowego GUID jako SessionId,
+                session = await _chatRepository.GetSessionAsync(request.SessionId.Value, ct);
+            }
+            else
+            {
+                session = await _chatRepository.CreateSessionAsync(ct);
+            }
 
+            var userMsg = new Message
+            {
+                ChatSessionId = session.Id,
+                Content       = request.Content,
+                IsFromBot     = false,
+                CreatedAt     = DateTime.UtcNow
             };
-            // if (request.SessionId.HasValue)
-            // {
-            //     session = await _db.ChatSessions.FindAsync(
-            //         new object[] { request.SessionId.Value }, ct)
-            //         ?? throw new InvalidOperationException("Nie znaleziono sesji");
-            // }
-            // else
-            // {
-            //     session = new ChatSession { StartedAt = DateTime.UtcNow };
-            //     _db.ChatSessions.Add(session);
-            //     await _db.SaveChangesAsync(ct);  // zapis nowej sesji
-            // }
+            await _chatRepository.AddMessageAsync(userMsg, ct);
 
-            // // 2. Zapis wiadomości użytkownika
-            // var userMsg = new Message
-            // {
-            //     ChatSessionId = session.Id,
-            //     Content       = request.Content,
-            //     IsFromBot     = false,
-            //     CreatedAt     = DateTime.UtcNow
-            // };
-            // _db.Messages.Add(userMsg);
-            // await _db.SaveChangesAsync(ct);    // zapis user message
-
-            // 3. Streamowanie odpowiedzi chatbota i zapis fragmentów
             await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct))
             {
-                // // Zapis każdego fragmentu do bazy
-                // var botMsg = new Message
-                // {
-                //     ChatSessionId = session.Id,
-                //     Content       = chunk,
-                //     IsFromBot     = true,
-                //     CreatedAt     = DateTime.UtcNow
-                // };
-                // _db.Messages.Add(botMsg);
-                // await _db.SaveChangesAsync(ct);  // zapis bot message
+                var botMsg = new Message
+                {
+                    ChatSessionId = session.Id,
+                    Content       = chunk,
+                    IsFromBot     = true,
+                    CreatedAt     = DateTime.UtcNow
+                };
+                await _chatRepository.AddMessageAsync(botMsg, ct);
 
-                // Zwrot fragmentu klientowi z id sesji
                 yield return new StreamMessageResultDto
                 {
                     SessionId = session.Id,

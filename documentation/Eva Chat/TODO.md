@@ -8,12 +8,13 @@
 	- pobieranie listy sesji
 	- pobieranie historii wiadomości w sesji
 	- ocena wiadomości
-	- ✴️ pytanie do czata (tworzenie nowej wiadomości i streamowanie odpowiedzi)
+	- ✅ pytanie do czata (tworzenie nowej wiadomości i streamowanie odpowiedzi)
 ⬜️ Zapis wiadomości do DB
-	- konfiguracja bazy danych
+	- ✅ konfiguracja bazy danych
+	- Składanie całości odpowiedzi do zapisu (albo do końca albo do przerwania)
 ⬜️ Przetestować z prawdziwym modelem (opcjonalnie)
 ⬜️ Rozbudować serwis fejkowego czatu by był bardziej zróżnicowany
-⬜️ Konfiguracja CORS do dev
+✅ Konfiguracja CORS do dev
 ⬜️ Testy
 
 
@@ -23,6 +24,7 @@
 ⬜️ Komponent czatu
 ⬜️ Testy
 ⬜️ Przenieść konfigurację
+⬜️ Obsługa błędów
 
 
 ## Zostawione na jutro... 

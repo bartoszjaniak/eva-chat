@@ -17,9 +17,12 @@ namespace BackendApi.Controllers
         /// Jeśli SessionId jest null, tworzy nową sesję.
         /// </summary>
         [HttpPost("message")]
-    public async Task Stream([FromBody] StreamMessageRequestDto cmd)
+    public async Task Stream([FromBody] StreamMessageRequestDto data)
         {
             Response.ContentType = "application/json";
+
+            var cmd = new StreamMessageCommand(data.SessionId, data.Content);
+
             await foreach (var chunk in _mediator.CreateStream(cmd, HttpContext.RequestAborted))
             {
                 var json = JsonSerializer.Serialize(chunk);
