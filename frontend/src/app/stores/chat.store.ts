@@ -8,6 +8,7 @@ import { SessionService } from '../services/session.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { RateMessageAction } from '../models/rate-message';
+import { SessionStore } from './session.store';
 
 
 let currentAbortController: AbortController | null = null;
@@ -23,6 +24,7 @@ export const ChatStore = signalStore(
         chatService: inject(ChatStreamService),
         sessionService: inject(SessionService),
         location: inject(Location),
+        sessionStore: inject(SessionStore),
     })),
     withMethods((store) => ({
         initNewSession() {
@@ -48,7 +50,7 @@ export const ChatStore = signalStore(
             let generatedMessage = currentMessages.find(msg => msg.type === 'generated');
 
             const sessionId = store.sessionId();
-            console.log('Sending message:', message, 'Session ID:', sessionId);
+
             patchState(store, { status: 'pending' });
             currentAbortController = new AbortController();
             try {
@@ -57,8 +59,9 @@ export const ChatStore = signalStore(
                         patchState(store, { status: 'generating' });
                     }
 
-                    if (!sessionId) {
+                    if (!store.sessionId()) {
                         patchState(store, { sessionId: SessionId });
+                        store.sessionStore.reloadList();
                         store.location.go(`/chat/${SessionId}`);
                     }
 

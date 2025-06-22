@@ -1,9 +1,9 @@
-import { patchState, signalStore, withHooks, withProps, withState } from "@ngrx/signals";
+import { patchState, signalStore, withHooks, withMethods, withProps, withState } from "@ngrx/signals";
 
 import { Session, SessionSummary } from "../models/session";
 import { inject } from "@angular/core";
 import { SessionService } from "../services/session.service";
-import { addEntity, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeAllEntities, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 
 export const SessionStore = signalStore(
     { providedIn: 'root' },
@@ -14,17 +14,25 @@ export const SessionStore = signalStore(
     withState({
         status: 'idle' as 'idle' | 'loading' | 'error'
     }),
-    withHooks({
-        onInit: async (store) => {
+    withMethods((store) => ({
+        reloadList ()  {
             patchState(store, { status: 'loading' });
-            try {
-                const sessions = await store.sessionService.getSessions().toPromise();
-                patchState(store, setEntities(sessions || []));
-                patchState(store, { status: 'idle' });
-            } catch (error) {
-                console.error('Error loading sessions:', error);
-                patchState(store, { status: 'error' });
-            }
+            patchState(store, removeAllEntities());
+            store.sessionService.getSessions().subscribe({
+                next: (sessions) => {
+                    patchState(store, setEntities(sessions || []));
+                    patchState(store, { status: 'idle' });
+                },
+                error: (error) => {
+                    console.error('Error loading sessions:', error);
+                    patchState(store, { status: 'error' });
+                }
+            });
+        },
+    })),
+    withHooks({
+        onInit: (store) => {
+          store.reloadList();
         }
     })
 );
