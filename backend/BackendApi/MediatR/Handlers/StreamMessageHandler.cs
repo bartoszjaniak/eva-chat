@@ -49,22 +49,29 @@ namespace BackendApi.MediatR.Handlers
             };
             await _chatRepository.AddMessageAsync(userMsg, ct);
 
-            await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct))
+            var botResponseBuilder = new System.Text.StringBuilder();
+            await foreach (var chunk in _chatService.StreamResponseAsync(request.Content, ct).WithCancellation(ct))
             {
-                var botMsg = new Message
-                {
-                    ChatSessionId = session.Id,
-                    Content       = chunk,
-                    IsFromBot     = true,
-                    CreatedAt     = DateTime.UtcNow
-                };
-                await _chatRepository.AddMessageAsync(botMsg, ct);
+                botResponseBuilder.Append(chunk);
 
                 yield return new StreamMessageResultDto
                 {
                     SessionId = session.Id,
                     Chunk     = chunk
                 };
+            }
+
+            // Zapisz całą odpowiedź bota do bazy tylko raz (jeśli coś wygenerowano)
+            if (botResponseBuilder.Length > 0)
+            {
+                var botMsg = new Message
+                {
+                    ChatSessionId = session.Id,
+                    Content       = botResponseBuilder.ToString(),
+                    IsFromBot     = true,
+                    CreatedAt     = DateTime.UtcNow
+                };
+                await _chatRepository.AddMessageAsync(botMsg, ct);
             }
         }
     }

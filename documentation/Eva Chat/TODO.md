@@ -11,7 +11,7 @@
 	- ✅ pytanie do czata (tworzenie nowej wiadomości i streamowanie odpowiedzi)
 ⬜️ Zapis wiadomości do DB
 	- ✅ konfiguracja bazy danych
-	- Składanie całości odpowiedzi do zapisu (albo do końca albo do przerwania)
+	- ✅ Składanie całości odpowiedzi do zapisu (albo do końca albo do przerwania)
 ⬜️ Przetestować z prawdziwym modelem (opcjonalnie)
 ⬜️ Rozbudować serwis fejkowego czatu by był bardziej zróżnicowany
 ✅ Konfiguracja CORS do dev
