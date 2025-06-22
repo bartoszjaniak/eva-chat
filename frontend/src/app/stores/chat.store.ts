@@ -1,6 +1,6 @@
 import { EnvironmentInjector, inject, Injector } from '@angular/core';
 import { ChatStreamService } from '../services/chat.service';
-import { Message } from '../models/message';
+import { Message, Rating } from '../models/message';
 import { signalStore, withState, withMethods, patchState, withHooks, withProps } from '@ngrx/signals';
 import { addEntity, removeAllEntities, setEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { ResponseStatus } from '../models/response-status';
@@ -21,8 +21,7 @@ export const ChatStore = signalStore(
     withProps((store) => ({
         chatService: inject(ChatStreamService),
         sessionService: inject(SessionService),
-        location:inject(Location),
-        route: inject(ActivatedRoute)
+        location: inject(Location),
     })),
     withMethods((store) => ({
         initNewSession() {
@@ -69,7 +68,8 @@ export const ChatStore = signalStore(
                         generatedMessage = {
                             id: MessageId,
                             type: 'generated',
-                            text: Chunk
+                            text: Chunk,
+                            rating: Rating.None,
                         };
 
                         patchState(store, addEntity(generatedMessage));
@@ -96,16 +96,5 @@ export const ChatStore = signalStore(
                 patchState(store, { status: 'idle' });
             }
         }
-    })),
-    withHooks({
-        onInit: (store) => {
-            // Initialize the store or perform any setup needed
-            const sessionId = store.route.snapshot.paramMap.get('id');
-            if (sessionId) {
-                store.loadMessages(sessionId);
-            } else {
-                store.initNewSession();
-            }
-        }
-    }),
+    }))
 );

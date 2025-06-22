@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map, Observable, tap } from "rxjs";
 import { Session, SessionSummary } from "../models/session";
-import { Message } from "../models/message";
+import { Message, Rating } from "../models/message";
 
 const API_URL = 'http://localhost:5278/api/session'; // TODO: przenieś do environment
  type SessionMessagesResponse = {
@@ -11,7 +11,7 @@ const API_URL = 'http://localhost:5278/api/session'; // TODO: przenieś do envir
         createdAt: Date;
         id: number;
         isFromBot: boolean;
-        rating: number;
+        rating: Rating;
         sessionId: string;
 
     }[];

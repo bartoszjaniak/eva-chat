@@ -11,7 +11,24 @@
       @case ('bot') {
         <div class="self-start">
           <div class="max-w-xl px-4 py-2 rounded-lg bg-gray-200 text-gray-900 mr-auto">
-            {{ message.text }}
+            {{ message.text}}
+          </div>
+          <div class="flex items-center mt-1">
+            <mat-icon
+              [ngClass]="message.rating === 1 ? '' : 'opacity-50'"
+              class="cursor-pointer hover:scale-110 transition-transform"
+              title="Like"
+            >
+              {{ message.rating === 1 ? 'thumb_up' : 'thumb_up_off_alt' }}
+            </mat-icon>
+            <span class="mx-2"></span>
+            <mat-icon
+              [ngClass]="message.rating === -1 ? '' : 'opacity-50'"
+              class="cursor-pointer hover:scale-110 transition-transform"
+              title="Dislike"
+            >
+              {{ message.rating === -1 ? 'thumb_down' : 'thumb_down_off_alt' }}
+            </mat-icon>
           </div>
         </div>
       }
