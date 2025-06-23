@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,9 +15,10 @@ export class SessionListComponent {
   public sessions = input<Session[]>([]);
   public status = input('loading'); // 'loading' | 'error' | 'success'
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   goToNewChat() {
-    this.router.navigate(['/chat']);
+    // force refresh of the chat store
+    this.router.navigate(['/chat'], { onSameUrlNavigation: 'reload' });
   }
 }

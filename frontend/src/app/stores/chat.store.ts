@@ -24,7 +24,7 @@ export const ChatStore = signalStore(
         chatService: inject(ChatStreamService),
         sessionService: inject(SessionService),
         location: inject(Location),
-        sessionStore: inject(SessionStore),
+        sessionStore: inject(SessionStore)
     })),
     withMethods((store) => ({
         initNewSession() {
