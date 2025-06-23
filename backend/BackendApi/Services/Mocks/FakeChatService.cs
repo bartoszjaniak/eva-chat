@@ -11,8 +11,8 @@ namespace BackendApi.Services.Mocks
         {
             var lorem = new Bogus.DataSets.Lorem();
             var random = new Random();
-            // int type = random.Next(3); // 0: jedno zdanie, 1: akapit, 2: kilka akapitów
-            int type = 2; // zawsze kilka akapitów
+            int type = random.Next(3); // 0: jedno zdanie, 1: akapit, 2: kilka akapitów
+
 
             string response;
             if (type == 2)
