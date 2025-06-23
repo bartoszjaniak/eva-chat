@@ -1,6 +1,7 @@
 using BackendApi.Data.Repositories;
 using BackendApi.Interfaces;
 using BackendApi.Services.Mocks;
+using BackendApi.Services; // Dodane
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register Services
-builder.Services.AddScoped<IChatService, FakeChatService>();
+var useRealModel = builder.Configuration.GetValue<bool>("UseRealModel");
+if (useRealModel)
+{
+    builder.Services.AddScoped<IChatService, RealChatService>();
+}
+else
+{
+    builder.Services.AddScoped<IChatService, FakeChatService>();
+}
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
 

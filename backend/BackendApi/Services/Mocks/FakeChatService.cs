@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using BackendApi.Interfaces;
-using Bogus;
 using System.Text.RegularExpressions;
 
 namespace BackendApi.Services.Mocks
