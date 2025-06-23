@@ -106,3 +106,23 @@ To switch the backend to use a real AI model:
 3. The backend will automatically inject the correct service based on this flag.
 
 By default, the mock (`FakeChatService`) is used.
+
+# Application Demo
+
+Below are GIFs demonstrating the main features of the application:
+
+## 1. Chat Functionality
+![Chat Functionality](documentation/assets/1.gif)
+*This GIF shows how the chat works, including sending and receiving messages.*
+
+## 2. Message Rating
+![Message Rating](documentation/assets/2.gif)
+*This GIF demonstrates how users can rate individual messages in the chat.*
+
+## 3. Conversation History
+![Conversation History](documentation/assets/3.gif)
+*This GIF presents the feature for browsing the history of previous conversations.*
+
+## 4. Creating a New Conversation
+![Creating a New Conversation](documentation/assets/4.gif)
+*This GIF illustrates the process of starting a new conversation.*
