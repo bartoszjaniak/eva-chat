@@ -34,7 +34,7 @@ namespace BackendApi.Services.Mocks
             var matches = Regex.Matches(response, @"[^ \n]+([ \n]+)?");
             foreach (Match match in matches)
             {
-                int delay = random.Next(50, 501);
+                int delay = random.Next(10, 201);
                 await Task.Delay(delay, ct);
                 yield return match.Value;
             }
