@@ -1,11 +1,11 @@
 import { Component, signal, input, output, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Message } from '../../models/message';
+import { Message } from '../../../models/message';
 import { MatIconModule } from '@angular/material/icon';
-import { RateMessageAction } from '../../models/rate-message';
-import { ChatMessageComponent } from './chat-message.component';
-import { ChatRatingComponent } from './chat-rating.component';
+import { RateMessageAction } from '../../../models/rate-message';
+import { ChatMessageComponent } from '../chat-message/chat-message.component';
+import { ChatRatingComponent } from '../chat-rating/chat-rating.component';
 
 @Component({
   selector: 'app-chat-messages',

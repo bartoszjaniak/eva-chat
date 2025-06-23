@@ -1,6 +1,6 @@
 import { Component, input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Message } from '../../models/message';
+import { Message } from '../../../models/message';
 
 @Component({
   selector: 'app-chat-message',

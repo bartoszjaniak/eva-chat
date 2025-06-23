@@ -1,9 +1,9 @@
 import { Component, effect, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ChatMessagesComponent } from '../components/chat/chat-messages.component';
-import { ChatInputComponent } from '../components/chat/chat-input.component';
+import { ChatMessagesComponent } from '../components/chat/chat-messages/chat-messages.component';
 import { ChatStore } from '../stores/chat.store';
 import { Location } from '@angular/common';
+import { ChatInputComponent } from '../components/chat/chat-input/chat-input.component';
 
 @Component({
     selector: 'app-chat-session-container',

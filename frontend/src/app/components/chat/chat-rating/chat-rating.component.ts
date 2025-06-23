@@ -1,5 +1,5 @@
 import { Component, input, output, EventEmitter } from '@angular/core';
-import { Message } from '../../models/message';
+import { Message } from '../../../models/message';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({

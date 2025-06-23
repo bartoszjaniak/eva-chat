@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ResponseStatus } from '../../models/response-status';
+import { ResponseStatus } from '../../../models/response-status';
 
 @Component({
   selector: 'app-chat-input',
