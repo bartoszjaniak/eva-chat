@@ -27,10 +27,6 @@ A web application simulating a simple AI chatbot, built with future integration 
 
 The application is designed with modularity in mind – it is easy to replace the "Lorem ipsum" with integration to a real AI model. Styling follows Angular Material standards, and the UI focuses on functionality rather than flashy colors.
 
----
-
-Want to add something more personal or include screenshots? Let me know, and we'll add some color 🌈
-
 
 ## Project structure
 
