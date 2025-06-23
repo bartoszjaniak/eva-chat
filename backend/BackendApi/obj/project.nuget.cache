@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "wwUseJD1IaM=",
+  "dgSpecHash": "kd846tjRN+k=",
   "success": true,
   "projectFilePath": "/Users/bartoszjaniak/Programming/eva-chat/backend/BackendApi/BackendApi.csproj",
   "expectedPackageFiles": [
     "/Users/bartoszjaniak/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/bartoszjaniak/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
+    "/Users/bartoszjaniak/.nuget/packages/bogus/35.6.3/bogus.35.6.3.nupkg.sha512",
     "/Users/bartoszjaniak/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/bartoszjaniak/.nuget/packages/mediatr/11.0.0/mediatr.11.0.0.nupkg.sha512",
     "/Users/bartoszjaniak/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",

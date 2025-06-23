@@ -1,0 +1,19 @@
+<ng-container *ngIf="message() as msg">
+  @switch (msg.type) {
+    @case ('user') {
+      <div class="flex justify-end">
+        <div class="max-w-xl inline-block px-4 py-2 rounded-lg bg-blue-500 text-white" [innerHTML]="formattedText()"></div>
+      </div>
+    }
+    @case ('bot') {
+      <div class="self-start">
+        <div class="max-w-xl inline-block px-4 py-2 rounded-lg mr-auto bg-gray-200 text-gray-900" [innerHTML]="formattedText()"></div>
+      </div>
+    }
+    @case ('generated') {
+      <div class="self-start">
+        <div class="max-w-xl inline-block px-4 py-2 rounded-lg mr-auto bg-gray-200 text-gray-900 animate-pulse" [innerHTML]="formattedText()"></div>
+      </div>
+    }
+  }
+</ng-container>
