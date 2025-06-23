@@ -1,7 +1,5 @@
 using System.Text.Json;
-using BackendApi.Data.Models;
-using BackendApi.DTOs;
-using BackendApi.DTOs.Chat;
+using BackendApi.DTOs.Chat.Requests;
 using BackendApi.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +35,7 @@ namespace BackendApi.Controllers
         /// Endpoint do oceny wiadomości w sesji
         /// </summary>
         [HttpPost("message/rate")]
-        public async Task<IActionResult> RateMessage([FromBody] RateMessageDto dto)
+        public async Task<IActionResult> RateMessage([FromBody] RateMessageRequestDto dto)
         {
             var result = await _mediator.Send(new RateMessageCommand(dto.MessageId, dto.Rating));
             if (!result) return NotFound();

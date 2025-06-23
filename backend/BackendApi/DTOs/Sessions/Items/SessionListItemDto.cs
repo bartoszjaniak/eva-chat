@@ -1,6 +1,4 @@
-using System;
-
-namespace BackendApi.DTOs.sessions
+namespace BackendApi.DTOs.Sessions.Items
 {
     public class SessionListItemDto
     {

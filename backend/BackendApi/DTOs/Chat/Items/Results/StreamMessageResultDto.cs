@@ -1,5 +1,5 @@
 
-namespace BackendApi.DTOs.Chat
+namespace BackendApi.DTOs.Chat.Results
 {
     public class StreamMessageResultDto
     {

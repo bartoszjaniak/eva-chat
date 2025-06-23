@@ -1,13 +1,13 @@
-using BackendApi.DTOs.Chat;
+using BackendApi.DTOs.Chat.Items;
 
-namespace BackendApi.DTOs.Sessions
+namespace BackendApi.DTOs.Sessions.Results
 {
-    public class SessionHistoryResponseDto
+    public class SessionHistoryResultDto
     {
         /// <summary>
         /// Lista wiadomości w kolejności chronologicznej
         /// </summary>
-        public List<MessageDto> Messages { get; set; } = new();
+        public List<MessageItemDto> Messages { get; set; } = new();
 
         /// <summary>
         /// Data i czas otwarcia sesji

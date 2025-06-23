@@ -1,10 +1,7 @@
-using BackendApi.DTOs;
-using BackendApi.DTOs.sessions;
-using BackendApi.MediatR.Commands;
 using BackendApi.MediatR.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using BackendApi.DTOs.Sessions;
+using BackendApi.DTOs.Sessions.Results;
 
 namespace BackendApi.Controllers
 {
@@ -29,7 +26,7 @@ namespace BackendApi.Controllers
         /// Pobiera historię wiadomości w sesji o podanym ID
         /// </summary>
         [HttpGet("{sessionId}/messages")]
-        public async Task<ActionResult<SessionHistoryResponseDto>> GetSessionMessages(Guid sessionId)
+        public async Task<ActionResult<SessionHistoryResultDto>> GetSessionMessages(Guid sessionId)
         {
             var result = await _mediator.Send(new GetSessionHistoryQuery(sessionId));
             return Ok(result);

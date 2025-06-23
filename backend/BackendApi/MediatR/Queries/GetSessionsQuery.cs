@@ -1,5 +1,5 @@
 using MediatR;
-using BackendApi.DTOs.sessions;
+using BackendApi.DTOs.Sessions.Items;
 
 namespace BackendApi.MediatR.Queries
 {

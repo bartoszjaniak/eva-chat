@@ -1,10 +1,10 @@
 using BackendApi.Data.Models;
-using BackendApi.DTOs.Chat;
 using BackendApi.Interfaces;
 using BackendApi.MediatR.Commands;
 using MediatR;
 using System.Runtime.CompilerServices;
 using BackendApi.Data.Repositories;
+using BackendApi.DTOs.Chat.Results;
 
 namespace BackendApi.MediatR.Handlers
 {

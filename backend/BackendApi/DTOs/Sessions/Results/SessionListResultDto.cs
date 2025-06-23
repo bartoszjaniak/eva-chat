@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
+using BackendApi.DTOs.Sessions.Items;
 
-namespace BackendApi.DTOs.sessions
+namespace BackendApi.DTOs.Sessions.Results
 {
     public class SessionListResponseDto
     {

@@ -1,7 +1,7 @@
-using BackendApi.DTOs.Chat;
+using BackendApi.DTOs.Enums;
 using MediatR;
 
 namespace BackendApi.MediatR.Commands
 {
-    public record RateMessageCommand(Guid MessageId, RatingDto Rating) : IRequest<bool>;
+    public record RateMessageCommand(Guid MessageId, RatingEnum Rating) : IRequest<bool>;
 }

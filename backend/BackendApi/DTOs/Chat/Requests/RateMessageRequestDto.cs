@@ -1,10 +1,8 @@
-using BackendApi.DTOs.Chat;
+using BackendApi.DTOs.Enums;
 
-namespace BackendApi.DTOs
+namespace BackendApi.DTOs.Chat.Requests
 {
-
-
-    public class RateMessageDto
+    public class RateMessageRequestDto
     {
         /// <summary>
         /// Identyfikator wiadomości
@@ -14,6 +12,6 @@ namespace BackendApi.DTOs
         /// <summary>
         /// Ocena wiadomości (Rating enum)
         /// </summary>
-        public RatingDto Rating { get; set; }
+        public RatingEnum Rating { get; set; }
     }
 }

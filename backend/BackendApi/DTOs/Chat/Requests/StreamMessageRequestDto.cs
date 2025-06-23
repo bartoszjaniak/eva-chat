@@ -1,4 +1,4 @@
-namespace BackendApi.DTOs.Chat
+namespace BackendApi.DTOs.Chat.Requests
 {
     public class StreamMessageRequestDto
     {

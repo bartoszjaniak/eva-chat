@@ -1,7 +1,7 @@
 using MediatR;
 using BackendApi.MediatR.Queries;
-using BackendApi.DTOs.sessions;
 using BackendApi.Data.Repositories;
+using BackendApi.DTOs.Sessions.Items;
 
 namespace BackendApi.MediatR.Handlers
 {

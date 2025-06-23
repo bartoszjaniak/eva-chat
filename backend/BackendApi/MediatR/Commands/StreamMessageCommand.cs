@@ -1,4 +1,4 @@
-using BackendApi.DTOs.Chat;
+using BackendApi.DTOs.Chat.Results;
 using MediatR;
 
 namespace BackendApi.MediatR.Commands
