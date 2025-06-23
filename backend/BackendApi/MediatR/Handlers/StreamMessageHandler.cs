@@ -11,11 +11,13 @@ namespace BackendApi.MediatR.Handlers
     public class StreamMessageHandler
         : IStreamRequestHandler<StreamMessageCommand, StreamMessageResultDto>
     {
+        private readonly IChatSessionRepository _sessionRepository;
         private readonly IChatRepository _chatRepository;
         private readonly IChatService _chatService;
 
-        public StreamMessageHandler(IChatRepository chatRepository, IChatService chatService)
+        public StreamMessageHandler(IChatSessionRepository sessionRepository, IChatRepository chatRepository, IChatService chatService)
         {
+            _sessionRepository = sessionRepository;
             _chatRepository = chatRepository;
             _chatService = chatService;
         }
@@ -27,11 +29,11 @@ namespace BackendApi.MediatR.Handlers
             ChatSession session;
             if (request.SessionId.HasValue)
             {
-                session = await _chatRepository.GetSessionAsync(request.SessionId.Value, ct);
+                session = await _sessionRepository.GetSessionAsync(request.SessionId.Value, ct);
             }
             else
             {
-                session = await _chatRepository.CreateSessionAsync(request.Content ,ct);
+                session = await _sessionRepository.CreateSessionAsync(request.Content ,ct);
             }
 
             var userMsg = new Message

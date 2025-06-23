@@ -9,12 +9,12 @@ namespace BackendApi.MediatR.Handlers
 {
     public class GetSessionHistoryHandler :  IRequestHandler<GetSessionHistoryQuery, SessionHistoryResultDto>
     {
-        private readonly IChatRepository _chatRepository;
-        public GetSessionHistoryHandler(IChatRepository chatRepository) => _chatRepository = chatRepository;
+        private readonly IChatSessionRepository _sessionRepository;
+        public GetSessionHistoryHandler(IChatSessionRepository sessionRepository) => _sessionRepository = sessionRepository;
 
         public async Task<SessionHistoryResultDto> Handle(GetSessionHistoryQuery request, CancellationToken cancellationToken)
         {
-            var session = await _chatRepository.GetSessionAsync(request.SessionId, cancellationToken);
+            var session = await _sessionRepository.GetSessionAsync(request.SessionId, cancellationToken);
             if (session == null)
                 throw new InvalidOperationException("Nie znaleziono sesji");
 

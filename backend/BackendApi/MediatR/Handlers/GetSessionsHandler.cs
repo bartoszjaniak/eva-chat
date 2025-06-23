@@ -7,12 +7,12 @@ namespace BackendApi.MediatR.Handlers
 {
     public class GetSessionsHandler : IRequestHandler<GetSessionsQuery, List<SessionListItemDto>>
     {
-        private readonly IChatRepository _chatRepository;
-        public GetSessionsHandler(IChatRepository chatRepository) => _chatRepository = chatRepository;
+        private readonly IChatSessionRepository _sessionRepository;
+        public GetSessionsHandler(IChatSessionRepository sessionRepository) => _sessionRepository = sessionRepository;
 
         public async Task<List<SessionListItemDto>> Handle(GetSessionsQuery request, CancellationToken ct)
         {
-            return await _chatRepository.GetSessionsAsync(ct);
+            return await _sessionRepository.GetSessionsAsync(ct);
         }
     }
 }

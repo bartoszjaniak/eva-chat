@@ -1,4 +1,5 @@
 using BackendApi.Data.Models;
+using BackendApi.DTOs.Enums;
 using BackendApi.DTOs.Sessions.Items;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,43 +10,20 @@ namespace BackendApi.Data.Repositories
         private readonly ApplicationDbContext _db;
         public ChatRepository(ApplicationDbContext db) => _db = db;
 
-        public async Task<List<SessionListItemDto>> GetSessionsAsync(CancellationToken ct)
-        {
-            return await _db.ChatSessions
-                .OrderByDescending(s => s.StartedAt)
-                .Select(s => new SessionListItemDto
-                {
-                    SessionId = s.Id,
-                    StartedAt = s.StartedAt,
-                    Title = s.Title
-                })
-                .ToListAsync(ct);
-        }
-
-        public async Task<ChatSession> CreateSessionAsync(string userMessage,  CancellationToken ct)
-        {
-            var session = new ChatSession {
-                Title = userMessage,
-                StartedAt = DateTime.UtcNow };
-
-            _db.ChatSessions.Add(session);
-            await _db.SaveChangesAsync(ct);
-            return session;
-        }
-
-        public async Task<ChatSession> GetSessionAsync(Guid sessionId, CancellationToken ct)
-        {
-            return await _db.ChatSessions
-                .Include(s => s.Messages)
-                .FirstOrDefaultAsync(s => s.Id == sessionId, ct)
-                ?? throw new InvalidOperationException("Nie znaleziono sesji");
-        }
-
         public async Task<Message> AddMessageAsync(Message message, CancellationToken ct)
         {
             _db.Messages.Add(message);
             await _db.SaveChangesAsync(ct);
             return message;
+        }
+
+        public async Task<bool> RateMessageAsync(Guid messageId, RatingEnum rating, CancellationToken ct)
+        {
+            var msg = await _db.Messages.FirstOrDefaultAsync(m => m.Id == messageId, ct);
+            if (msg == null) return false;
+            msg.Rating = (Rating)rating;
+            await _db.SaveChangesAsync(ct);
+            return true;
         }
     }
 }

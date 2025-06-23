@@ -1,25 +1,17 @@
 using MediatR;
 using BackendApi.MediatR.Commands;
-using Microsoft.EntityFrameworkCore;
-using BackendApi.Data.Models;
+using BackendApi.Data.Repositories;
 
 namespace BackendApi.MediatR.Handlers
 {
     public class RateMessageHandler : IRequestHandler<RateMessageCommand, bool>
     {
-        private readonly ApplicationDbContext _db;
-        public RateMessageHandler(ApplicationDbContext db) => _db = db;
+        private readonly IChatRepository _chatRepository;
+        public RateMessageHandler(IChatRepository chatRepository) => _chatRepository = chatRepository;
 
         public async Task<bool> Handle(RateMessageCommand req, CancellationToken ct)
         {
-            var msg = await _db.Messages.FirstOrDefaultAsync(m => m.Id == req.MessageId, ct) ?? throw new InvalidOperationException("Nie znaleziono wiadomości");
-
-            if (msg == null) return false;
-            msg.Rating = (Rating)req.Rating;
-
-            await _db.SaveChangesAsync(ct);
-
-            return true;
+            return await _chatRepository.RateMessageAsync(req.MessageId, req.Rating, ct);
         }
     }
 }

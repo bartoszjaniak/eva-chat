@@ -23,6 +23,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 // Register Services
 builder.Services.AddScoped<IChatService, FakeChatService>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
