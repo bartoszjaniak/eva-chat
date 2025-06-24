@@ -1,5 +1,5 @@
 # About
-This is a demo application - .NET 9 + Angular 20 (with Angular Material and Tailwind).
+This is a demo application - .NET 9 + Angular 19 (with Angular Material and Tailwind).
 
 ## Core details
 
