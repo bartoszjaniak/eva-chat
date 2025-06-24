@@ -3,8 +3,9 @@ import { ResponseStatus } from '../models/response-status';
 import { ChatStore } from '../stores/chat.store';
 import { HttpClient } from '@angular/common/http';
 import { RateMessageAction } from '../models/rate-message';
+import { environment } from '../../environments/environment';
 
-const API_URL = 'http://localhost:5278/api/chat/message'; // Zastąp rzeczywistym URL API
+const API_URL = environment.apiUrl + '/api/chat/message';
 
 @Injectable({ providedIn: 'root' })
 export class ChatStreamService {

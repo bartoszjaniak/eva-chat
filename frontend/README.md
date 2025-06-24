@@ -22,6 +22,24 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+## API URL configuration
+
+The API URL is configured using environment variables. To set the API URL:
+
+1. Edit the `.env.development` file (for development) or `.env` (for production build) in the `frontend` directory:
+
+```
+NG_APP_API_URL=http://localhost:5278
+```
+
+2. The Angular app will use this value as the API base URL. If not set, it defaults to `http://localhost:5278`.
+
+3. After changing the value, restart the dev server or rebuild the app:
+   - For development: `ng serve`
+   - For production: `ng build --configuration production`
+
+The value is injected at build time using the `@ngx-env/builder` package.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

@@ -1,3 +1,4 @@
 backend/BackendApi/bin
 backend/BackendApi/obj
 node_modules/
+frontend/.env
