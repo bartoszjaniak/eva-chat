@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@ngrx/entity": "^19.2.1",
-    "@ngrx/signals": "^19.2.1"
-  }
-}
