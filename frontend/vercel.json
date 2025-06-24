@@ -1,5 +1,6 @@
 {
   "rewrites": [
+      { "source": "/browser/(.*)", "destination": "/browser/$1" },
     { "source": "/(.*)", "destination": "/browser/index.html" }
-  ]
+]
 }
