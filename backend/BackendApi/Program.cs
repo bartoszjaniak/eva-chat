@@ -33,6 +33,10 @@ else
 }
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
+builder.Services.AddScoped<IMessageStreamService, MessageStreamService>();
+builder.Services.AddScoped<IMessageRatingService, MessageRatingService>();
+builder.Services.AddScoped<ISessionQueryService, SessionQueryService>();
+builder.Services.AddScoped<ISessionHistoryService, SessionHistoryService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

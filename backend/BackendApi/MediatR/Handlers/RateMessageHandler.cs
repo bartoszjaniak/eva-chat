@@ -1,17 +1,16 @@
 using MediatR;
 using BackendApi.MediatR.Commands;
-using BackendApi.Data.Repositories;
+using BackendApi.Interfaces;
 
 namespace BackendApi.MediatR.Handlers
 {
     public class RateMessageHandler : IRequestHandler<RateMessageCommand, bool>
     {
-        private readonly IChatRepository _chatRepository;
-        public RateMessageHandler(IChatRepository chatRepository) => _chatRepository = chatRepository;
-
+        private readonly IMessageRatingService _messageRatingService;
+        public RateMessageHandler(IMessageRatingService messageRatingService) => _messageRatingService = messageRatingService;
         public async Task<bool> Handle(RateMessageCommand req, CancellationToken ct)
         {
-            return await _chatRepository.RateMessageAsync(req.MessageId, req.Rating, ct);
+            return await _messageRatingService.RateMessageAsync(req.MessageId, req.Rating, ct);
         }
     }
 }
